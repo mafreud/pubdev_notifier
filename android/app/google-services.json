@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "805782479126",
+    "project_id": "pubdev-notifier",
+    "storage_bucket": "pubdev-notifier.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:805782479126:android:167322ba95a82581987037",
+        "android_client_info": {
+          "package_name": "com.pubdevNotifier"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "805782479126-gapmqjefc5jggbmm4vldconod8evdhbk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChB0-LB5lQiqcUZIStNVTH5F7HEjQoaG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "805782479126-gapmqjefc5jggbmm4vldconod8evdhbk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
