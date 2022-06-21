@@ -26,5 +26,14 @@ class AuthService {
         'createdAt': Timestamp.now(),
       },
     );
+    // TODO(mafreud): add method to set FCM token
+    await _cloudFirestoreService.setData(
+      path: FirestorePath.fcmTokenDocument(uid),
+      data: {
+        'fcmToken': '',
+        'createdAt': Timestamp.now(),
+        'updatedAt': Timestamp.now(),
+      },
+    );
   }
 }
