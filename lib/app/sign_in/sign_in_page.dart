@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pubdev_notifier/utils/firebase/firebase_auth/firebase_auth_service.dart';
 
 /// Sign In Page
@@ -29,7 +30,11 @@ class SignInPage extends ConsumerWidget {
               style: ElevatedButton.styleFrom(
                 primary: Colors.deepPurpleAccent[700],
               ),
-              onPressed: () async => await firebaseAuth.sigInAnonymously(),
+              onPressed: () async {
+                await firebaseAuth.sigInAnonymously();
+                // ignore: use_build_context_synchronously
+                context.go('/top');
+              },
               child: const Text('SIGN IN'),
             )
           ],
