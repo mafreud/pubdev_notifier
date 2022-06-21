@@ -12,6 +12,7 @@ class FirebaseAuthService {
   final firebaseAuth = FirebaseAuth.instance;
 
   /// sign in anonymously, using Firebase Auth
-  Future<void> sigInAnonymously() async =>
-      await firebaseAuth.signInAnonymously();
+  Future<UserCredential> sigInAnonymously() async {
+    return await firebaseAuth.signInAnonymously();
+  }
 }
