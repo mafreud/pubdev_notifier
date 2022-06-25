@@ -41,7 +41,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyChB0-LB5lQiqcUZIStNVTH5F7HEjQoaG4',
-    appId: '1:805782479126:android:167322ba95a82581987037',
+    appId: '1:805782479126:android:e4b07c482878973f987037',
     messagingSenderId: '805782479126',
     projectId: 'pubdev-notifier',
     storageBucket: 'pubdev-notifier.appspot.com',
@@ -49,11 +49,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyApcvtMwj5QekjA42_Uja-k4VvJxOH89Gk',
-    appId: '1:805782479126:ios:232f94535b5e1651987037',
+    appId: '1:805782479126:ios:8f9adf78d74bfebe987037',
     messagingSenderId: '805782479126',
     projectId: 'pubdev-notifier',
     storageBucket: 'pubdev-notifier.appspot.com',
-    iosClientId: '805782479126-2m0s3b4kh51nbmajve9pads1r8nnkd7m.apps.googleusercontent.com',
-    iosBundleId: 'com.pubdevNotifier',
+    iosClientId: '805782479126-pttsrf4ctpt07tqocfs8e0v2b562e9gv.apps.googleusercontent.com',
+    iosBundleId: 'com.pubdevNotifier.release',
   );
 }
