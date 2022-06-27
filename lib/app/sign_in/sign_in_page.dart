@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pubdev_notifier/utils/auth/auth_service.dart';
 
-import 'package:cloud_functions/cloud_functions.dart';
-
 /// Sign In Page
 class SignInPage extends ConsumerWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -29,21 +27,6 @@ class SignInPage extends ConsumerWidget {
               height: 10,
             ),
             ElevatedButton(
-              onPressed: () async {
-                final result = await FirebaseFunctions.instance
-                    .httpsCallable('helloWorld')
-                    .call();
-                print(result);
-
-                // final response =
-                //     await http.get(Uri.parse(_packageUrl('cloud_firestore')));
-                // final json = jsonDecode(response.body) as Map<String, dynamic>;
-                // final version = json['latest']['version'] as String;
-                // print(version);
-              },
-              child: const Text('test'),
-            ),
-            ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.deepPurpleAccent[700],
               ),
@@ -59,10 +42,4 @@ class SignInPage extends ConsumerWidget {
       ),
     );
   }
-
-  String _packageUrl(String packageName) =>
-      'https://pub.dev/api/packages/$packageName';
-
-  String _changelogUrl(String packageName) =>
-      'https://pub.dev/packages/$packageName/changelog';
 }

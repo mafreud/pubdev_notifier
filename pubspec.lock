@@ -64,27 +64,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.6.17"
-  cloud_functions:
-    dependency: "direct main"
-    description:
-      name: cloud_functions
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.2.17"
-  cloud_functions_platform_interface:
-    dependency: transitive
-    description:
-      name: cloud_functions_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.1.8"
-  cloud_functions_web:
-    dependency: transitive
-    description:
-      name: cloud_functions_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.2.16"
   collection:
     dependency: transitive
     description:
@@ -205,13 +184,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
-  http:
-    dependency: "direct main"
-    description:
-      name: http
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.13.4"
   http_parser:
     dependency: transitive
     description:
