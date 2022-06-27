@@ -8,5 +8,7 @@
     "firestore",
     "pubdev",
     "riverpod"
-  ]
+  ],
+  "eslint.workingDirectories": [ "./functions" ]
+
 }
