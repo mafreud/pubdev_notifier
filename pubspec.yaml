@@ -14,6 +14,7 @@ dependencies:
   firebase_messaging: ^11.4.2
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.9.3
   flutter_riverpod: ^2.0.0-dev.9
   go_router: ^4.0.0
   rename: ^2.0.1
@@ -25,3 +26,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/pubdev_icon.png"

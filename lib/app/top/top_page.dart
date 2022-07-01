@@ -24,11 +24,14 @@ class TopPage extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          const Card(
+          Card(
             child: ListTile(
-              title: Text('cloud_firestore'),
-              subtitle: Text('v3.0.2 - updated xxx days ago'),
-              trailing: Icon(Icons.check),
+              title: const Text('cloud_firestore'),
+              subtitle: const Text('v3.0.2 - updated xxx days ago'),
+              trailing: Icon(
+                Icons.check,
+                color: Colors.deepPurpleAccent[700],
+              ),
             ),
           ),
           Card(
