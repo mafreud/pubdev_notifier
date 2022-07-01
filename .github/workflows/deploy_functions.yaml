@@ -1,0 +1,30 @@
+name: deploy_firebase_functions
+
+on:
+  push:
+    branches: "develop"
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create env file for Firebase Functions
+        run: |
+          cd functions
+          touch .env
+          echo "${{ secrets.CLIENT_EMAIL }}" >> .env
+          echo "${{ secrets.PRIVATE_KEY }}" >> .env
+
+      - name: Install npm packages
+        run: |
+          cd functions
+          npm install
+          npm install firebase-tools
+
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
