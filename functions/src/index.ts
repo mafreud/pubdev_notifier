@@ -2,14 +2,29 @@
 import * as functions from "firebase-functions";
 import admin = require("firebase-admin");
 import {info, warn} from "firebase-functions/lib/logger";
+import * as firebaseAdmin from "firebase-admin";
 
+
+firebaseAdmin.initializeApp({
+  credential: firebaseAdmin.credential.cert({
+    projectId: "pubdev-notifier",
+    clientEmail: `${process.env.CLIENT_EMAIL}`,
+    privateKey: `${process.env.PRIVATE_KEY}`,
+  }),
+});
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const axios = require("axios").default;
-admin.initializeApp();
+const firebase = admin.firestore();
 
 export const updatePackages = functions.pubsub.schedule("0 9 * * *").timeZone("Asia/Tokyo").onRun(async (context) => {
-  const targetPackage = "cloud_firestore";
+  const packageList = ["cloud_firestore", "firebase_core", "firebase_auth", "go_router"];
+  for await (const targetPackage of packageList) {
+    await update(targetPackage);
+  }
+});
+
+async function update(targetPackage:string) {
   const pubDevVersion = await getPackageVersionFromPubDev(targetPackage);
   const firestoreVersion = await getPackageVersionFromFirestore(targetPackage);
 
@@ -17,11 +32,46 @@ export const updatePackages = functions.pubsub.schedule("0 9 * * *").timeZone("A
     info("no update");
   } else {
     info("update is available");
-    // 1. send push notification.
-    // 2. update package version on firestore
-    updatePackageVersionOnFirestore(targetPackage, pubDevVersion);
+    await sendPushNotification(targetPackage, pubDevVersion);
+    await updatePackageVersionOnFirestore(targetPackage, pubDevVersion);
   }
-});
+}
+
+async function sendPushNotification(targetPackage:string, pubDevVersion:string) {
+  const userQs = await firebase.collection("user").get();
+  const tokens: string[] = [];
+  for await (const userDocs of userQs.docs) {
+    const fcmTokenDocs = await firebase.collection("user").doc(userDocs.id).collection("fcmToken").doc("fcmToken").get();
+    const fcmData = fcmTokenDocs.data();
+    info("fcmData", fcmData);
+    if (fcmData==undefined) {
+      return null;
+    }
+    const {fcmToken} =fcmData;
+
+    if (fcmToken == "") {
+      info("fcmToken is not set. This functions is finishing.");
+      return null;
+    }
+    tokens.push(fcmToken);
+  }
+  info("tokens:", tokens);
+  const params = {
+    notification: {
+      title: "New version is released!",
+      body: `${targetPackage} v${pubDevVersion}`,
+    },
+    tokens: tokens,
+  };
+  info("params:", params);
+  try {
+    const result = await firebaseAdmin.messaging().sendMulticast(params);
+    info("result", result);
+  } catch (e) {
+    warn("erorr", e);
+  }
+  return null;
+}
 
 
 async function getPackageVersionFromPubDev(packageName:string) {
@@ -33,7 +83,6 @@ async function getPackageVersionFromPubDev(packageName:string) {
 }
 
 async function getPackageVersionFromFirestore(packageName:string) {
-  const firebase = admin.firestore();
   const docs = await firebase.collection("package").doc(packageName).get();
   const data = docs.data();
   if (data === undefined) {

@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -31,6 +32,21 @@ class SignInPage extends ConsumerWidget {
                 primary: Colors.deepPurpleAccent[700],
               ),
               onPressed: () async {
+                // TODO(someone): add indicator
+                // TODO(someone): move to firebase_messaging_service
+                NotificationSettings settings =
+                    await FirebaseMessaging.instance.requestPermission(
+                  alert: true,
+                  announcement: false,
+                  badge: true,
+                  carPlay: false,
+                  criticalAlert: false,
+                  provisional: false,
+                  sound: true,
+                );
+
+                debugPrint(
+                    'User granted permission: ${settings.authorizationStatus}');
                 await auth.signIn();
                 // ignore: use_build_context_synchronously
                 context.go('/top');
