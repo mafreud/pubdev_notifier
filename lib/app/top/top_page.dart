@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutterfire_ui/firestore.dart';
 import 'package:go_router/go_router.dart';
 
 class TopPage extends ConsumerWidget {
@@ -22,39 +24,24 @@ class TopPage extends ConsumerWidget {
         backgroundColor: Colors.deepPurpleAccent[700],
         title: const Text('TOP'),
       ),
-      body: Column(
-        children: [
-          Card(
+      body: FirestoreListView<Map<String, dynamic>>(
+        query: FirebaseFirestore.instance
+            .collection('package')
+            .orderBy('packageName'),
+        itemBuilder: (context, snapshot) {
+          final data = snapshot.data();
+
+          return Card(
             child: ListTile(
-              title: const Text('cloud_firestore'),
-              subtitle: const Text('v3.0.2 - updated xxx days ago'),
+              title: Text(data['packageName']),
+              subtitle: Text('v${data['version']}'),
               trailing: Icon(
                 Icons.check,
                 color: Colors.deepPurpleAccent[700],
               ),
             ),
-          ),
-          Card(
-            child: ListTile(
-              title: const Text('firebase_auth'),
-              subtitle: const Text('v3.0.2 - updated xxx days ago'),
-              trailing: Icon(
-                Icons.check,
-                color: Colors.deepPurpleAccent[700],
-              ),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: const Text('go_router'),
-              subtitle: const Text('v4.0.0 - updated xxx days ago'),
-              trailing: Icon(
-                Icons.check,
-                color: Colors.deepPurpleAccent[700],
-              ),
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
