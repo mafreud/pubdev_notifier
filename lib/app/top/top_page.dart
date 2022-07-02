@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final packageStreamProvider =
     StreamProvider<QuerySnapshot<Map<String, dynamic>>>((_) {
@@ -52,11 +54,17 @@ class TopPage extends HookWidget {
               FirebaseAuth.instance.signOut();
               context.go('/');
             },
-            icon: const Icon(Icons.exit_to_app_outlined),
+            icon: const Icon(
+              Icons.exit_to_app_outlined,
+              color: Colors.white,
+            ),
           )
         ],
         backgroundColor: Colors.deepPurpleAccent[700],
-        title: const Text('TOP'),
+        title: const Text(
+          'TOP',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('package').snapshots(),
@@ -74,13 +82,53 @@ class TopPage extends HookWidget {
               final data = docs.data();
 
               return Card(
-                child: ListTile(
-                  title: Text(data['packageName']),
-                  subtitle: Text('v${data['version']}'),
-                  trailing: Icon(
-                    Icons.check,
-                    color: Colors.deepPurpleAccent[700],
-                  ),
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(data['packageName']),
+                      subtitle: Text('v${data['version']}'),
+                      trailing: HeroIcon(
+                        HeroIcons.checkCircle,
+                        color: Colors.deepPurpleAccent[700],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        InkWell(
+                          child: HeroIcon(
+                            HeroIcons.bookOpen,
+                            color: Colors.deepPurpleAccent[700],
+                          ),
+                          onTap: () {
+                            _launchUrl(data['docs']);
+                          },
+                        ),
+                        const SizedBox(width: 30),
+                        InkWell(
+                          child: HeroIcon(
+                            HeroIcons.code,
+                            color: Colors.deepPurpleAccent[700],
+                          ),
+                          onTap: () {
+                            _launchUrl(data['github']);
+                          },
+                        ),
+                        const SizedBox(width: 20),
+                        TextButton(
+                          child: Text(
+                            'pub.dev',
+                            style:
+                                TextStyle(color: Colors.deepPurpleAccent[700]),
+                          ),
+                          onPressed: () {
+                            _launchUrl(data['pubdev']);
+                          },
+                        ),
+                        const SizedBox(width: 8),
+                      ],
+                    ),
+                  ],
                 ),
               );
             },
@@ -88,5 +136,9 @@ class TopPage extends HookWidget {
         },
       ),
     );
+  }
+
+  Future<void> _launchUrl(String url) async {
+    if (!await launchUrl(Uri.parse(url))) throw 'Could not launch $url';
   }
 }

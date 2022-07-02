@@ -7,6 +7,7 @@
     "cupertino",
     "firestore",
     "flutterfire",
+    "heroicons",
     "pubdev",
     "riverpod"
   ],
