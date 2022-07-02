@@ -29,14 +29,19 @@ class TopPage extends ConsumerWidget {
           backgroundColor: Colors.deepPurpleAccent[700],
           title: const Text('TOP'),
         ),
-        body: packageStream.when(
-          loading: () => const CircularProgressIndicator(),
-          error: (err, stack) => Text('Error: $err'),
-          data: (querySnapshot) {
+        body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('package').snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            }
+            final qs = snapshot.data as QuerySnapshot<Map<String, dynamic>>;
             return ListView.builder(
-              itemCount: querySnapshot.docs.length,
+              itemCount: qs.docs.length,
               itemBuilder: (_, index) {
-                final docs = querySnapshot.docs[index];
+                final docs = qs.docs[index];
                 final data = docs.data();
 
                 return Card(
@@ -52,27 +57,6 @@ class TopPage extends ConsumerWidget {
               },
             );
           },
-        )
-
-        // body: FirestoreListView<Map<String, dynamic>>(
-        //   query: FirebaseFirestore.instance
-        //       .collection('package')
-        //       .orderBy('packageName'),
-        //   itemBuilder: (context, snapshot) {
-        //     final data = snapshot.data();
-
-        //     return Card(
-        //       child: ListTile(
-        //         title: Text(data['packageName']),
-        //         subtitle: Text('v${data['version']}'),
-        //         trailing: Icon(
-        //           Icons.check,
-        //           color: Colors.deepPurpleAccent[700],
-        //         ),
-        //       ),
-        //     );
-        //   },
-        // ),
-        );
+        ));
   }
 }

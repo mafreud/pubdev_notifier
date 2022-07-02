@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pubdev_notifier/app/sign_in/sign_in_page.dart';
 import 'package:pubdev_notifier/app/top/top_page.dart';
 
+import 'app/auth_gate/auth_gate.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -30,6 +31,10 @@ class MyApp extends StatelessWidget {
     routes: <GoRoute>[
       GoRoute(
         path: '/',
+        builder: (context, state) => const AuthGate(),
+      ),
+      GoRoute(
+        path: '/signIn',
         builder: (context, state) => const SignInPage(),
       ),
       GoRoute(
