@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pubdev_notifier/utils/auth/auth_service.dart';
-import 'package:pubdev_notifier/utils/firebase/firebase_auth/firebase_auth_service.dart';
 
-/// Sign In Page
-class SignInPage extends ConsumerWidget {
+class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends ConsumerState<SignInPage> {
+  @override
+  Widget build(BuildContext context) {
     final auth = ref.watch(authServiceProvider);
-    final firebaseAuth = ref.watch(firebaseAuthServiceProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurpleAccent[700],
@@ -34,7 +36,6 @@ class SignInPage extends ConsumerWidget {
                 primary: Colors.deepPurpleAccent[700],
               ),
               onPressed: () async {
-                await firebaseAuth.signOut();
                 // TODO(someone): add indicator
                 // TODO(someone): move to firebase_messaging_service
                 NotificationSettings settings =
@@ -51,7 +52,7 @@ class SignInPage extends ConsumerWidget {
                 debugPrint(
                     'User granted permission: ${settings.authorizationStatus}');
                 await auth.signIn();
-                // ignore: use_build_context_synchronously
+                if (!mounted) return;
                 context.go('/top');
               },
               child: const Text('SIGN IN'),
