@@ -18,7 +18,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurpleAccent[700],
-        title: const Text('WELCOME'),
+        title: const Text(
+          'WELCOME',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Center(
         child: Column(
@@ -55,7 +58,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                 if (!mounted) return;
                 context.go('/top');
               },
-              child: const Text('SIGN IN'),
+              child: const Text(
+                'SIGN IN',
+                style: TextStyle(color: Colors.white),
+              ),
             )
           ],
         ),
