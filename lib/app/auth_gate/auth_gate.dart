@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pubdev_notifier/app/navigation_bar/navigation_bar_page.dart';
 import 'package:pubdev_notifier/app/sign_in/sign_in_page.dart';
-import 'package:pubdev_notifier/app/top/top_page.dart';
 import 'package:pubdev_notifier/utils/firebase/firebase_auth/firebase_auth_service.dart';
 
 class AuthGate extends ConsumerWidget {
@@ -19,7 +19,7 @@ class AuthGate extends ConsumerWidget {
         if (user == null) {
           return const SignInPage();
         }
-        return const TopPage();
+        return const NavigationBarPage();
       },
     );
   }
