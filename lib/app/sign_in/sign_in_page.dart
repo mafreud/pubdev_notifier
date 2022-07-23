@@ -27,6 +27,14 @@ class _SignInPageState extends ConsumerState<SignInPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20), // Ima
+              child: const Image(
+                image: AssetImage('assets/pubdev_icon.png'),
+                width: 120,
+              ),
+            ),
+            const SizedBox(height: 100),
             const Text(
               'Welcome to pub.dev notifier',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
