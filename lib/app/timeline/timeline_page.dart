@@ -35,7 +35,7 @@ class TimelinePage extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: Colors.deepPurpleAccent[700],
         title: const Text(
-          'タイムライン',
+          'TIMELINE',
           style: TextStyle(color: Colors.white),
         ),
         actions: [
