@@ -9,12 +9,12 @@ class SignInController extends StateNotifier<AsyncValue<void>> {
 
   Future<void> signIn() async {
     state = const AsyncValue<void>.loading();
-    await authService.signIn();
+    state = await AsyncValue.guard(() => authService.signIn());
   }
 
   Future<void> signOut() async {
     state = const AsyncValue<void>.loading();
-    await authService.signOut();
+    state = await AsyncValue.guard(() => authService.signOut());
   }
 }
 

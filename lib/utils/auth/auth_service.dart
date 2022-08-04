@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pubdev_notifier/app/user/user.dart';
 import 'package:pubdev_notifier/utils/firebase/cloud_firestore/cloud_firestore_service.dart';
 import 'package:pubdev_notifier/utils/firebase/cloud_firestore/firestore_path.dart';
 import 'package:pubdev_notifier/utils/firebase/firebase_auth/firebase_auth_service.dart';
@@ -25,10 +25,7 @@ class AuthService {
     final uid = user.user!.uid;
     await _cloudFirestoreService.setData(
       path: FirestorePath.userDocument(uid),
-      data: {
-        'userId': uid,
-        'createdAt': Timestamp.now(),
-      },
+      data: User(userId: uid, createdAt: DateTime.now()).toJson(),
     );
     await _firebaseMessagingService.setFcmTokenToFirestore(uid);
   }
