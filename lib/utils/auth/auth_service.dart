@@ -32,4 +32,8 @@ class AuthService {
     );
     await _firebaseMessagingService.setFcmTokenToFirestore(uid);
   }
+
+  Future<void> signOut() async {
+    await _firebaseAuthService.signOut();
+  }
 }
